@@ -1,0 +1,19 @@
+# VPC Peering
+
+VPC peering is a networking connection between two or more VPCs that allows them to communicate with each other as if they were part of the same network.
+
+✅ It enables **private connectivity** between resources in different VPCs.
+
+---
+
+## 📷 Diagram
+
+![VPC Peering](./Images/vpc-peering.png)
+
+---
+
+## 📝 Key Points
+
+- No single point of failure
+- Transitive peering not allowed
+- You must update route tables
