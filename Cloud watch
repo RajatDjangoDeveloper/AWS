@@ -125,3 +125,52 @@ Step 6: Adjust the Graph for Real-Time Viewing
 Step 7: Observe CPU Utilization Increase
 	• The CPUUtilization metric will spike toward 80% or higher.
 	• CloudWatch will display this change in near real time depending on your selected period and monitoring type.
+
+
+Steps to Create a CloudWatch Alarm for EC2 CPU ≥ 50% with Email Notification
+
+Objective:
+To configure an alarm that triggers when the CPU utilization of an EC2 instance is greater than or equal to 50%, and sends a notification via email.
+
+Step-by-Step Guide
+Step 1: Open the CloudWatch Console
+	1. Go to the AWS Management Console.
+	2. Navigate to CloudWatch > Alarms.
+	3. Click Create Alarm.
+
+Step 2: Select Metric
+	1. Click Select metric.
+	2. In the Browse tab, choose:
+		○ Browse: EC2 > Per-Instance Metrics
+		○ Select the metric: CPUUtilization
+		○ Filter by InstanceId to select your target EC2 instance.
+	3. Click Select metric.
+
+Step 3: Specify Conditions
+	1. Statistic: Choose Average (default).
+	2. Period: Select 1 minute or as preferred.
+	3. Threshold type: Static.
+	4. Condition:
+		○ Trigger alarm when CPUUtilization is ≥ 50.
+
+Step 4: Configure Actions
+	1. Under Notification, choose In alarm state.
+	2. Select Create new topic (or use existing).
+	3. Enter a topic name (e.g., HighCPUAlarmTopic).
+	4. Enter the recipient email address.
+	5. Click Create topic.
+Note: A confirmation email will be sent to the provided email. The alarm will not notify until the subscription is confirmed.
+
+Step 5: Add a Name and Review
+	1. Enter a name for the alarm, such as EC2-HighCPU-Alarm.
+	2. Review the configuration details.
+	3. Click Create Alarm.
+
+Step 6: Confirm Email Subscription
+	1. Go to your inbox.
+	2. Open the email from AWS Notifications.
+	3. Click the Confirm subscription link to activate the SNS topic.
+
+Expected Behavior
+	• Once the CPU utilization of the EC2 instance reaches or exceeds 50% (based on the specified period), the alarm state will change to ALARM.
+	• A notification email will be sent to the subscribed email address.
