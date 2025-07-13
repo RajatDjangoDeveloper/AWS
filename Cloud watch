@@ -1,0 +1,127 @@
+1. What is CloudWatch?
+
+CloudWatch is Amazon's native monitoring and observability service.
+It helps you:
+	• Monitor metrics (e.g. CPU, memory, disk)
+	• Collect and analyze logs
+	• Set alarms to get notified or trigger actions
+	• Create dashboards to visualize metrics
+	• Trigger automated responses to system events (like EC2 stop/start)
+
+2. CloudWatch Core Components
+Component	Purpose
+Metrics	Numeric data points (e.g., CPUUtilization)
+Logs	Logs from services (Lambda, EC2, ECS, etc.)
+Alarms	Watch a metric and trigger actions
+Dashboards	Visualize your data
+Events / EventBridge	Automation based on rules and schedules
+
+
+3. CloudWatch Metrics
+	• Where they come from: Automatically from AWS services like EC2, RDS, Lambda, etc.
+	• Granularity: Default is 5 mins. Use “detailed monitoring” for 1-min data.
+	• Structure:
+		○ Namespace: AWS/EC2, AWS/RDS, etc.
+		○ Metric name: CPUUtilization, NetworkIn, etc.
+		○ Dimensions: e.g. InstanceId=i-12345678
+
+Hands-On:
+	1. Launch EC2 instance
+	2. Go to CloudWatch → Metrics → EC2 → Select CPUUtilization
+You’ll see a time-series graph
+
+4. CloudWatch Logs
+	• Log Groups: Container for logs (e.g., /aws/ec2/mylogs)
+	• Log Streams: Sequence of log events from a source
+You can:
+	• View logs from EC2 (with Agent), Lambda, API Gateway, ECS, etc.
+	• Search logs
+	• Set retention policies (to avoid storage costs)
+🔧 Hands-On:
+	• Go to Lambda → View logs in CloudWatch
+	• OR install CloudWatch Agent on EC2 to send logs from /var/log
+
+5. CloudWatch Alarms
+Let you set thresholds on metrics and take action.
+Example: Alert if EC2 CPU > 80% for 5 minutes
+🔧 Hands-On:
+	1. CloudWatch → Alarms → Create Alarm
+	2. Select EC2 CPUUtilization
+	3. Threshold: Greater than 80
+	4. Action: Send notification (create SNS topic)
+
+6. Dashboards
+Use dashboards to visually monitor:
+	• EC2, Lambda, S3, RDS metrics
+	• Custom metrics
+ Hands-On:
+	1. Go to CloudWatch → Dashboards → Create Dashboard
+	2. Add widgets like graphs, number, text
+	3. Select metrics → Add to widget
+
+
+
+Steps to Simulate High CPU Usage and Monitor it in AWS CloudWatch
+Objective:
+To simulate high CPU usage on an EC2 instance and monitor the CPUUtilization metric in real time using AWS CloudWatch.
+
+Step-by-Step Guide
+Step 1: Launch an EC2 Instance
+
+Step 2: Connect to the EC2 Instance via SSH
+
+Step 3: Create a Python Script to Simulate High CPU Load
+	1. Install Python (if not already installed):
+
+sudo yum install python3 -y
+
+	2. Create a new Python file:
+	import time
+	
+	def simulate_cpu_spike(duration=30, cpu_percent=80):
+	    print(f"Simulating CPU spike at {cpu_percent}%...")
+	    start_time = time.time()
+	
+	    # Calculate the number of iterations needed to achieve the desired CPU utilization
+	    target_percent = cpu_percent / 100
+	    total_iterations = int(target_percent * 5_000_000)  # Adjust the number as needed
+	
+	    # Perform simple arithmetic operations to spike CPU utilization
+	    for _ in range(total_iterations):
+	        result = 0
+	        for i in range(1, 1001):
+	            result += i
+	
+	    # Wait for the rest of the time interval
+	    elapsed_time = time.time() - start_time
+	    remaining_time = max(0, duration - elapsed_time)
+	    time.sleep(remaining_time)
+	
+	    print("CPU spike simulation completed.")
+	
+	if __name__ == '__main__':
+	    # Simulate a CPU spike for 30 seconds with 80% CPU utilization
+	    simulate_cpu_spike(duration=30, cpu_percent=80)
+	
+	
+Step 4: Enable Detailed Monitoring (Optional for 1-minute resolution)
+	1. Go to the EC2 Console and select the instance.
+	2. Click on Actions > Manage Detailed Monitoring.
+	3. Enable detailed monitoring to get 1-minute metric intervals (this may incur additional cost).
+
+Step 5: Open CloudWatch and Monitor Metrics
+	1. In the EC2 Console, navigate to the Monitoring tab.
+	2. Click View in CloudWatch to open the CloudWatch metrics view.
+	3. Filter the metrics:
+		○ Namespace: AWS/EC2
+		○ Got to 'Per-Instance Metrics' and apply the filter by running ec2's ID
+		○ Select the Metric Name: CPUUtilization
+		
+
+Step 6: Adjust the Graph for Real-Time Viewing
+	1. Set the time window to the last 5 or 10 minutes.
+	2. Change the period to 5 seconds or the lowest allowed based on monitoring granularity.
+
+Step 7: Observe CPU Utilization Increase
+	• The CPUUtilization metric will spike toward 80% or higher.
+	• CloudWatch will display this change in near real time depending on your selected period and monitoring type.
