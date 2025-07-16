@@ -1,0 +1,53 @@
+Amazon Lambda-
+	• You can use AWS Lambda to run code without provisioning or managing servers.
+	• Save costs by paying only for the compute time you use.
+Lambda Functions?
+	• AWS lambda are server-less compute functions are fully managed by the AWS where developers can run there code without worrying about servers.
+	• AWS lambda functions will allow you to run the code with out provisioning or managing servers.
+	• AWS lambda function will support different programming languages. You can build the function with the language at your convenience. Following are some languages supported by AWS lambda:
+		○ Python.
+		○ Node.js.
+		○ Java.
+		○ C#.
+		○ PowerShell.
+		○ Go.
+		
+		
+Below python code can be used to Delete the EBS Snapshots that are no longer attached to the Volumes
+
+import boto3
+from botocore.exceptions import ClientError
+
+def lambda_handler(event, context):
+    ec2 = boto3.client('ec2', region_name='us-east-1')
+
+    print("Fetching snapshots owned by this account...")
+    snapshots = ec2.describe_snapshots(OwnerIds=['self'])['Snapshots']
+    print(f"Total snapshots found: {len(snapshots)}")
+
+    for snapshot in snapshots:
+        snapshot_id = snapshot['SnapshotId']
+        volume_id = snapshot.get('VolumeId')
+        print(f"Snapshot ID: {snapshot_id}, VolumeId: {volume_id}")
+
+        if not volume_id:
+            print(f"Deleting snapshot {snapshot_id} (no volume ID)")
+            ec2.delete_snapshot(SnapshotId=snapshot_id)
+            continue
+
+        try:
+            print(f"Checking volume {volume_id} existence...")
+            volume = ec2.describe_volumes(VolumeIds=[volume_id])
+            attachments = volume['Volumes'][0]['Attachments']
+            print(f"Volume {volume_id} exists with {len(attachments)} attachments.")
+            if not attachments:
+                print(f"Deleting snapshot {snapshot_id} (volume not attached)")
+                ec2.delete_snapshot(SnapshotId=snapshot_id)
+        except ClientError as e:
+            error_code = e.response['Error']['Code']
+            print(f"ClientError for volume {volume_id}: {error_code}")
+            if error_code == 'InvalidVolume.NotFound':
+                print(f"Deleting snapshot {snapshot_id} (volume not found)")
+                ec2.delete_snapshot(SnapshotId=snapshot_id)
+            else:
+                print(f"Unhandled ClientError: {e}")
