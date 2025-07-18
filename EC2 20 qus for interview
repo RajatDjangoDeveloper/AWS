@@ -1,0 +1,106 @@
+ChatGPT said:
+Here are 20 EC2 interview questions with direct developer-focused answers, useful for Cloud Engineer/SRE roles:
+
+✅ 1. What is EC2?
+Amazon EC2 (Elastic Compute Cloud) is a virtual server to run applications on AWS.
+
+✅ 2. What are EC2 instance types?
+Instance types define compute, memory, storage, and networking:
+
+General Purpose: t3, m5
+
+Compute Optimized: c5
+
+Memory Optimized: r5
+
+Storage Optimized: i3, d2
+
+Accelerated Computing: p3, g4
+
+✅ 3. How do you connect to an EC2 instance?
+Using SSH:
+
+bash
+Copy
+Edit
+ssh -i key.pem ec2-user@<public-ip>
+✅ 4. What is an AMI?
+Amazon Machine Image — a template with OS + app configs used to launch EC2 instances.
+
+✅ 5. What is a Launch Template?
+Reusable configuration for launching EC2s: AMI, instance type, key pair, SG, etc. Used with ASG and Spot Instances.
+
+✅ 6. What is the difference between AMI and Launch Template?
+AMI: Just the image (OS + software).
+
+Launch Template: Full launch config, includes AMI.
+
+✅ 7. How do you make an EC2 instance highly available?
+Use:
+
+Multi-AZ setup
+
+Load Balancer (ALB)
+
+Auto Scaling Group (ASG)
+
+✅ 8. What is the difference between Spot, On-Demand, and Reserved Instances?
+On-Demand: Pay per hour/second.
+
+Reserved: 1- or 3-year commitment, cheaper.
+
+Spot: Up to 90% cheaper, but can be terminated anytime.
+
+✅ 9. What are EC2 Security Groups?
+Virtual firewalls. Control inbound/outbound traffic for instances (stateful).
+
+✅ 10. How do you stop unauthorized SSH access to EC2?
+Restrict 22 port to your IP.
+
+Use key pairs.
+
+Enable MFA for SSH (advanced).
+
+✅ 11. What happens when you stop and start an EC2 instance?
+Instance ID stays the same.
+
+Public IP changes (unless using Elastic IP).
+
+Data in EBS persists.
+
+✅ 12. Can you attach multiple EBS volumes to one EC2?
+Yes, multiple EBS volumes can be attached and mounted as different drives.
+
+✅ 13. What is the difference between EBS and Instance Store?
+EBS: Persistent, survives stop/start.
+
+Instance Store: Ephemeral, data lost on stop/terminate.
+
+✅ 14. How do you create a backup of EC2?
+Create a snapshot of the EBS volume. Can also use AMI creation.
+
+✅ 15. What is user-data in EC2?
+Script run at first boot for automation (e.g., install software). Written in bash or cloud-init.
+
+✅ 16. How do you scale EC2 instances automatically?
+Use Auto Scaling Groups (ASG) based on metrics (CPU, memory via CloudWatch).
+
+✅ 17. What is Elastic IP in EC2?
+Static IP address for EC2. Doesn't change on stop/start.
+
+✅ 18. How do you monitor an EC2 instance?
+Use CloudWatch to monitor CPU, memory (via agent), disk, network.
+
+✅ 19. Can we host a website on EC2?
+Yes. Install web server (Apache/Nginx), configure ports (80, 443), use Elastic IP or domain.
+
+✅ 20. How do you secure EC2?
+Use security groups, NACLs.
+
+Disable root login.
+
+Patch OS regularly.
+
+Use IAM roles (not access keys).
+
+Encrypt EBS volumes.
