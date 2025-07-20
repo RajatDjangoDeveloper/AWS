@@ -1,0 +1,56 @@
+🔟 Top 10 S3 Interview Questions & Answers
+✅ 1. What is Amazon S3?
+A fully managed object storage service used to store and retrieve any amount of data.
+
+✅ 2. What is a Bucket?
+A container in S3 that holds data (objects). You must create a bucket before storing files.
+
+✅ 3. What is the structure of an S3 object?
+Key (name)
+
+Value (data)
+
+Metadata
+
+Version ID (if versioning is enabled)
+
+✅ 4. What are the S3 storage classes?
+STANDARD (frequent access)
+
+STANDARD_IA (infrequent access)
+
+ONEZONE_IA (single AZ)
+
+INTELLIGENT_TIERING
+
+GLACIER / DEEP_ARCHIVE (long-term cold storage)
+
+✅ 5. How is S3 different from EBS and EFS?
+Feature	S3 (Object)	EBS (Block)	EFS (File)
+Access	HTTP(S)	Attached to EC2	Shared via NFS
+Use Case	Backups, media	DBs, boot volumes	Shared files
+
+✅ 6. What is Versioning in S3?
+Keeps multiple versions of an object. Helps with recovery from accidental deletion/overwrite.
+
+✅ 7. What is Lifecycle Policy in S3?
+Rules to automate data transition to cheaper storage classes or delete after X days.
+
+✅ 8. How do you secure data in S3?
+Use bucket policies
+
+IAM policies
+
+Encryption (SSE-S3, SSE-KMS)
+
+Enable MFA Delete
+
+✅ 9. What is S3 Object Lock?
+Prevents an object from being deleted or overwritten for a specified time (used for compliance/WORM).
+
+✅ 10. How does S3 ensure high availability and durability?
+Durability: 11 9s (99.999999999%)
+
+Availability: Multi-AZ replication
+
+Behind the scenes, S3 replicates your data across multiple facilities and AZs.
