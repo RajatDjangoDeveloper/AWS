@@ -1,0 +1,75 @@
+✅ 1. What is a VPC?
+A Virtual Private Cloud is a logically isolated section of AWS where you define your own networking environment (IP range, subnets, route tables, gateways, etc.).
+
+✅ 2. What is the CIDR block in VPC?
+Classless Inter-Domain Routing (e.g., 10.0.0.0/16) defines the IP address range of the VPC.
+
+✅ 3. What is the default VPC?
+AWS provides a default VPC per region with a /16 CIDR block, one public subnet in each AZ, and internet access enabled.
+
+✅ 4. What is the difference between a public and private subnet?
+Public subnet: Has a route to an Internet Gateway (IGW).
+
+Private subnet: No route to IGW.
+
+✅ 5. How does an EC2 in a private subnet access the internet?
+Using a NAT Gateway in a public subnet which routes traffic to the Internet Gateway.
+
+✅ 6. What is an Internet Gateway (IGW)?
+A horizontally scaled AWS component that allows internet access for public subnets.
+
+✅ 7. What is a NAT Gateway?
+A service that allows instances in private subnets to access the internet, but prevents inbound access from the internet.
+
+✅ 8. Difference between NAT Gateway and Internet Gateway?
+Feature	NAT Gateway	Internet Gateway
+Direction	Outbound only	Inbound & Outbound
+Used for	Private subnet	Public subnet
+
+✅ 9. What is a route table in VPC?
+Defines how traffic is routed from subnets to other networks (IGW, NAT, VPN, etc.).
+
+✅ 10. What are Network ACLs (NACL)?
+Stateless firewall rules applied at the subnet level for inbound/outbound traffic. You must define both.
+
+✅ 11. What is the difference between Security Groups and NACLs?
+Security Groups: Stateful, at instance level.
+
+NACLs: Stateless, at subnet level.
+
+✅ 12. Can a subnet span multiple Availability Zones?
+❌ No. A subnet is bound to only one AZ.
+
+✅ 13. What is a peering connection in VPC?
+Enables traffic routing between two VPCs using private IPs. They must not have overlapping CIDRs.
+
+✅ 14. Can VPC peering be established between different regions?
+✅ Yes, called inter-region VPC peering.
+
+✅ 15. What is VPC Flow Logs?
+Logs all IP traffic in/out of VPC interfaces. Useful for security auditing and debugging.
+
+✅ 16. What is a VPC endpoint?
+Allows private connection between your VPC and AWS services without using internet or NAT.
+
+Gateway endpoint: S3, DynamoDB
+
+Interface endpoint: Other services (uses ENI)
+
+✅ 17. How many IP addresses are reserved in a subnet?
+5 IPs are reserved in each subnet:
+
+Network address
+
+Broadcast address
+
+AWS Reserved (.1, .2, .3)
+
+✅ 18. What is the max number of subnets in a VPC?
+You can create up to 200 subnets per VPC (default soft limit, can be increased).
+
+✅ 19. What is the maximum VPC size?
+Maximum CIDR size is /16 (65,536 IPs), minimum is /28 (16 IPs).
+
+✅ 20. Can two VPCs have overlapping CIDR blocks?
+✅ Yes, but ❌ peering or transit routing will not work unless you use NAT or private link-style workarounds.
