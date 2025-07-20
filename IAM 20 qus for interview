@@ -1,0 +1,88 @@
+🔐 Top 20 IAM Interview Questions with Answers
+✅ 1. What is IAM?
+AWS service to manage users, groups, roles, and permissions securely.
+
+✅ 2. What is the difference between IAM user and IAM role?
+User: Permanent identity with credentials (username/password or access keys).
+
+Role: Temporary identity assumed by users, services, or other AWS accounts.
+
+✅ 3. What are IAM groups?
+A collection of IAM users with shared policies attached for easier permission management.
+
+✅ 4. What are IAM policies?
+JSON documents that define permissions (Allow/Deny) for users, groups, or roles.
+
+✅ 5. Types of IAM policies?
+Managed Policies (AWS or custom)
+
+Inline Policies (attached directly to 1 identity only)
+
+✅ 6. What is a trust policy?
+A policy that defines who can assume a role, commonly used with roles (e.g., EC2 assumes a role).
+
+✅ 7. What is AssumeRole?
+An AWS STS API that lets you temporarily switch to another role, often cross-account.
+
+✅ 8. How do IAM roles work with EC2?
+Assign an IAM role to an EC2 instance to grant it permissions without storing access keys.
+
+✅ 9. What is the IAM policy evaluation logic?
+By default: Deny everything
+
+If Allow is found: Allow
+
+If Deny is found: Deny (overrides Allow)
+
+✅ 10. What are permissions boundaries?
+Advanced IAM feature that defines the maximum permissions an identity (user/role) can get, even if more are attached.
+
+✅ 11. How do you secure IAM credentials?
+Use roles instead of access keys
+
+Rotate credentials regularly
+
+Use MFA
+
+Avoid inline policies
+
+✅ 12. What is MFA in IAM?
+Multi-Factor Authentication adds extra verification (like OTP) for secure login and sensitive actions.
+
+✅ 13. What is IAM Access Analyzer?
+Tool to find public/shared resources by analyzing policies — helps you reduce unintended access.
+
+✅ 14. How do you debug IAM policy issues?
+Use IAM Policy Simulator
+
+Check CloudTrail logs
+
+Verify resource-level permissions
+
+✅ 15. What is the difference between Identity-based and Resource-based policies?
+Identity-based: Attached to user/role
+
+Resource-based: Attached to resources (e.g., S3 bucket policy)
+
+✅ 16. Can a single IAM user belong to multiple groups?
+✅ Yes. IAM users can be part of multiple groups.
+
+✅ 17. What’s the difference between IAM and Resource Access Manager (RAM)?
+IAM: For identity and permission control
+
+RAM: Share resources across accounts/VPCs
+
+✅ 18. How do you enforce least privilege?
+Use minimal permissions needed
+
+Enable permission boundaries
+
+Review access with IAM Access Analyzer
+
+✅ 19. What is AWS Organizations in relation to IAM?
+Helps centrally manage multiple AWS accounts with consolidated billing and Service Control Policies (SCPs).
+
+✅ 20. How do you give cross-account access using IAM?
+Create a role in Account A with trust policy allowing Account B
+
+User in Account B assumes the role via sts:AssumeRole
